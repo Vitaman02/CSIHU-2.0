@@ -80,16 +80,19 @@ public class GlobalCommandRegistrar {
     }
 
     private boolean hasChanged(ApplicationCommandData discordCommand, ApplicationCommandRequest command) {
-        // Check if description has changed
-        if (!discordCommand.description().equals(command.description())) return true;
+        // Compare types
+        if (!discordCommand.type().toOptional().orElse(1).equals(command.type().toOptional().orElse(1))) return true;
 
-        // Check if default permissions have changed
+        //Check if description has changed.
+        if (!discordCommand.description().equals(command.description().toOptional().orElse(""))) return true;
+
+        //Check if default permissions have changed
         boolean discordCommandDefaultPermission = discordCommand.defaultPermission().toOptional().orElse(true);
         boolean commandDefaultPermission = command.defaultPermission().toOptional().orElse(true);
 
         if (discordCommandDefaultPermission != commandDefaultPermission) return true;
 
-        // Check and return if options have changed
+        //Check and return if options have changed.
         return !discordCommand.options().equals(command.options());
     }
 

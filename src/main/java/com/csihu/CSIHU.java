@@ -2,7 +2,7 @@ package com.csihu;
 
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
-import discord4j.core.event.domain.interaction.SlashCommandEvent;
+import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
@@ -32,7 +32,7 @@ public class CSIHU {
                 System.out.println("Error trying to register global slash commands: " + e);
             }
 
-            Mono<Void> slashCommands = gateway.on(SlashCommandEvent.class, SlashCommandListener::handle).then();
+            Mono<Void> slashCommands = gateway.on(ChatInputInteractionEvent.class, SlashCommandListener::handle).then();
 
             Mono<Void> onMessage = gateway.on(MessageCreateEvent.class, MessageCreateListener::handle).then();
 
